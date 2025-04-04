@@ -37,4 +37,18 @@ public class StudentController {
              return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+    @GetMapping("/get/{id}")
+    public ResponseEntity<?> getStudentById(@PathVariable Long id){
+        try {
+            Student student = studentService.getStudentById(id);
+            if(student !=null) {
+                return ResponseEntity.ok(student);
+            }else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student with ID " + id + " not found.");
+            }
+        }catch (Exception e){
+           e.printStackTrace();
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while fetching the student.");
+        }
+    }
 }

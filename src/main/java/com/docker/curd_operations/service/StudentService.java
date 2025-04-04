@@ -20,6 +20,6 @@ public class StudentService {
         return studentRepository.findAll();
     }
     public Student getStudentById(Long id){
-        return studentRepository.findById(id).get();
+        return studentRepository.findById(id).orElse(null);
     }
 }
