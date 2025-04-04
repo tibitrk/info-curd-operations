@@ -15,6 +15,17 @@ public class Student {
     private Date dob;
     private String place;
     private String department;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
 
     public Long getId() {
         return id;
