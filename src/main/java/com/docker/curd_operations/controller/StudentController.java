@@ -77,4 +77,21 @@ public class StudentController {
 
         }
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id){
+        try{
+            Student studentExist = studentService.getStudentById(id);
+
+            if(studentExist !=null){
+                studentService.deleteById(id);
+                return ResponseEntity.ok("student deleted successfully");
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student with ID " + id + " not found.");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while fetching the student");
+        }
+
+    }
 }
