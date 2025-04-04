@@ -3,8 +3,11 @@ package com.docker.curd_operations.controller;
 import com.docker.curd_operations.model.Student;
 import com.docker.curd_operations.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -15,7 +18,23 @@ public class StudentController {
 
     @PostMapping("/save")
     public ResponseEntity<String> saveStudent(@RequestBody Student student){
-        studentService.createStudent(student);
-        return ResponseEntity.ok("student created successfully");
+
+        try{
+
+            studentService.createStudent(student);
+            return ResponseEntity.ok("student created successfully");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to save student "+ e.getMessage());
+        }
+    }
+    @GetMapping("/get")
+    public ResponseEntity<List<Student>> getAllStudent(){
+        try {
+            List<Student> students= studentService.getAllStudent();
+             return ResponseEntity.ok(students);
+        }catch (Exception e){
+             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 }
